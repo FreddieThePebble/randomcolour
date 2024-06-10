@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Generator</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+        }
+        #color-code {
+            font-size: 2em;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="color-code"></div>
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function setColor() {
+            const randomColor = getRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            const colorCodeElement = document.getElementById('color-code');
+            colorCodeElement.textContent = randomColor;
+            colorCodeElement.style.backgroundColor = randomColor;
+        }
+
+        function copyToClipboard(text) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert(`Copied ${text} to clipboard`);
+        }
+
+        document.addEventListener('DOMContentLoaded', setColor);
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'r' || event.key === 'R') {
+                setColor();
+            } else if (event.key === 'h' || event.key === 'H') {
+                const colorCode = document.getElementById('color-code').textContent;
+                copyToClipboard(colorCode);
+            }
+        });
+    </script>
+</body>
+</html>
